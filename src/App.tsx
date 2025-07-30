@@ -8,6 +8,8 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { NoteEditor } from '@/components/NoteEditor'
+import { ThemeToggle } from '@/components/ThemeToggle'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 import { useIsMobile } from '@/hooks/use-mobile'
 
 export interface Note {
@@ -18,7 +20,7 @@ export interface Note {
   updatedAt: number
 }
 
-function App() {
+function NotesApp() {
   const [notes, setNotes] = useKV<Note[]>("notes", [])
   const [selectedNoteId, setSelectedNoteId] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState("")
@@ -105,7 +107,8 @@ function App() {
           >
             ← Back
           </Button>
-          <h1 className="font-medium text-lg">Edit Note</h1>
+          <h1 className="font-medium text-lg flex-1">Edit Note</h1>
+          <ThemeToggle />
         </div>
         {selectedNote && (
           <NoteEditor 
@@ -126,10 +129,13 @@ function App() {
         <div className="p-6 border-b">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl font-medium text-foreground">Notes</h1>
-            <Button onClick={createNewNote} size="sm" className="shrink-0">
-              <Plus className="w-4 h-4 mr-1" />
-              New
-            </Button>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <Button onClick={createNewNote} size="sm" className="shrink-0">
+                <Plus className="w-4 h-4 mr-1" />
+                New
+              </Button>
+            </div>
           </div>
           
           {/* Search */}
@@ -240,6 +246,14 @@ function App() {
         </div>
       )}
     </div>
+  )
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <NotesApp />
+    </ThemeProvider>
   )
 }
 

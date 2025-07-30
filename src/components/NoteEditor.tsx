@@ -5,6 +5,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { PencilSimple, Eye } from '@phosphor-icons/react'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import { useIsMobile } from '@/hooks/use-mobile'
 import type { Note } from '@/App'
 
@@ -68,6 +69,8 @@ export function NoteEditor({ note, onUpdate, className = '' }: NoteEditorProps) 
             {isPreviewMode ? <PencilSimple className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             {isPreviewMode ? 'Edit' : 'Preview'}
           </Button>
+          <div className="flex-1" />
+          <ThemeToggle />
         </div>
 
         {/* Title */}
@@ -106,12 +109,15 @@ export function NoteEditor({ note, onUpdate, className = '' }: NoteEditorProps) 
     <div className={`flex flex-col h-full ${className}`}>
       {/* Title */}
       <div className="p-6 border-b">
-        <Input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Note title..."
-          className="text-xl font-medium border-0 px-0 focus-visible:ring-0 bg-transparent"
-        />
+        <div className="flex items-center gap-4">
+          <Input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Note title..."
+            className="text-xl font-medium border-0 px-0 focus-visible:ring-0 bg-transparent flex-1"
+          />
+          <ThemeToggle />
+        </div>
       </div>
 
       {/* Editor and Preview */}
